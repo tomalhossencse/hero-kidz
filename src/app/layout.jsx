@@ -1,11 +1,15 @@
-import { Geist, Geist_Mono, Poppins } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layouts/Navbar";
 import Footer from "@/components/layouts/Footer";
-import Container from "@/components/layouts/Container";
+import localFont from "next/font/local";
 
 const poppins = Poppins({
   weight: ["100", "200", "400", "500", "600", "800"],
+});
+
+export const banglaFont = localFont({
+  src: "../fonts/mayaboti-normal.ttf",
 });
 
 export const metadata = {
@@ -20,8 +24,10 @@ export default function RootLayout({ children }) {
         <header>
           <Navbar />
         </header>
-        <main className="py-2 md:w-11/12 mx-auto">{children}</main>
-        <footer className="py-2 md:w-11/12 mx-auto">
+        <main className="py-2 md:w-11/12 mx-auto min-h-[calc(100vh-302px)]">
+          {children}
+        </main>
+        <footer>
           <Footer />
         </footer>
       </body>
