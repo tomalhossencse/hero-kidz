@@ -1,9 +1,9 @@
-"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { FaStar } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
 import { MdOutlineVisibility } from "react-icons/md";
+import CartButton from "../buttons/CartButton";
 
 const ProductCard = ({ product }) => {
   const { title, image, price, discount, ratings, reviews, sold, _id } =
@@ -64,10 +64,7 @@ const ProductCard = ({ product }) => {
         {/* Buttons */}
         <div className="flex gap-2 mt-3">
           {/* Add to Cart */}
-          <button className="btn btn-primary flex-1 gap-2">
-            <FiShoppingCart />
-            Add
-          </button>
+          <CartButton product={product} />
 
           {/* View Details */}
           <Link

@@ -1,10 +1,11 @@
 import { banglaFont } from "@/app/layout";
 import Image from "next/image";
 import React from "react";
+import Container from "../layouts/Container";
 
 const Banner = () => {
   return (
-    <div className="flex justify-between items-center">
+    <Container className="flex justify-between items-center">
       <div className={`flex-1 space-y-5 py-20  ${banglaFont.className}`}>
         <h2 className="text-6xl font-bold leading-20">
           আপনার শিশুকে দিন একটি{" "}
@@ -22,7 +23,7 @@ const Banner = () => {
           height={400}
         ></Image>
       </div>
-    </div>
+    </Container>
   );
 };
 

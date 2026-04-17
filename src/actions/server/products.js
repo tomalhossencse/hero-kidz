@@ -17,5 +17,5 @@ export const getSingleProducts = async (id) => {
     _id: new ObjectId(id),
   };
   const product = await productCollection.findOne(query);
-  return product || {};
+  return { ...product, _id: product._id.toString() } || {};
 };

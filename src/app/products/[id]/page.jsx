@@ -1,8 +1,44 @@
 import { getSingleProducts } from "@/actions/server/products";
+import CartButton from "@/components/buttons/CartButton";
 import Container from "@/components/layouts/Container";
 import Image from "next/image";
 import { FaStar } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
+
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  const product = await getSingleProducts(id);
+
+  return {
+    title: product.title,
+    description: product.description.slice(0, 140),
+
+    openGraph: {
+      title: product.title,
+      description: product.description.slice(0, 140),
+      url: `https://hero-kidz-iota-nine.vercel.app/products/${id}`,
+      images: [
+        {
+          url: product.image, //
+          width: 1200,
+          height: 630,
+          alt: product.title,
+        },
+      ],
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title: product.title,
+      description: product.description.slice(0, 140),
+      images: [product.image],
+    },
+
+    alternates: {
+      canonical: `https://hero-kidz-iota-nine.vercel.app/products/${id}`,
+    },
+  };
+}
 
 const ProductDetails = async ({ params }) => {
   const { id } = await params;
@@ -25,7 +61,7 @@ const ProductDetails = async ({ params }) => {
     <Container className="px-4 py-10">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         {/* Image */}
-        <div className="relative w-full h-[400px] rounded-2xl overflow-hidden shadow-lg">
+        <div className="relative w-full h-100 rounded-2xl overflow-hidden shadow-lg">
           <Image
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             src={image}
@@ -70,10 +106,7 @@ const ProductDetails = async ({ params }) => {
           </div>
 
           {/* Button */}
-          <button className="btn btn-primary gap-2 w-full md:w-auto">
-            <FiShoppingCart />
-            Add to Cart
-          </button>
+          <CartButton product={product} />
         </div>
       </div>
 
