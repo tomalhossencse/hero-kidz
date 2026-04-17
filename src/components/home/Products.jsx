@@ -5,8 +5,8 @@ import { getProducts } from "@/actions/server/products";
 // import products from "@/data/toys.json";
 
 const Products = async () => {
-  const products = (await getProducts()) || [];
-  console.log(products);
+  const products = await getProducts();
+  // console.log(products);
   return (
     <div>
       <Title first={"Our"} second={"Products"} />

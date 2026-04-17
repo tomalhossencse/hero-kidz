@@ -6,10 +6,11 @@ const Logo = () => {
   return (
     <Link className="flex items-center jus gap-1" href="/">
       <Image
-        alt="hero-kidz-logo"
+        alt="logo"
         src="/assets/logo.png"
-        width={50}
+        width={120}
         height={40}
+        className="w-12"
       />
       <h2 className="text-xl font-bold">
         Hero <span className="text-primary">Kidz</span>

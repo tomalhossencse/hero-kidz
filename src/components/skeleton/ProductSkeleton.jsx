@@ -1,6 +1,6 @@
 const ProductSkeleton = () => {
   return (
-    <div className="bg-base-100 w-[400px] shadow-xl rounded-2xl overflow-hidden animate-pulse">
+    <div className="bg-base-100 w-100 shadow-xl rounded-2xl overflow-hidden animate-pulse">
       {/* Image */}
       <figure className="relative h-56 w-full overflow-hidden">
         <div className="w-full h-full bg-base-300" />

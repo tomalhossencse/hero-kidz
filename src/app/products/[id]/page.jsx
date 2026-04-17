@@ -26,7 +26,13 @@ const ProductDetails = async ({ params }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         {/* Image */}
         <div className="relative w-full h-[400px] rounded-2xl overflow-hidden shadow-lg">
-          <Image src={image} alt={title} fill className="object-cover" />
+          <Image
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            src={image}
+            alt={title}
+            fill
+            className="object-cover"
+          />
 
           {/* Discount Badge */}
           {discount > 0 && (

@@ -5,7 +5,7 @@ const ProductDetailsSkeleton = () => {
     <Container className="w-6xl px-4 py-10 animate-pulse">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         {/* Image */}
-        <div className="relative w-full h-[400px] rounded-2xl overflow-hidden shadow-lg bg-base-300">
+        <div className="relative w-full h-100 rounded-2xl overflow-hidden shadow-lg bg-base-300">
           {/* Fake Discount Badge */}
           <div className="absolute top-4 left-4 h-6 w-16 bg-base-200 rounded-full" />
         </div>
