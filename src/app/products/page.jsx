@@ -1,7 +1,8 @@
+import Products from "@/components/home/Products";
 import React from "react";
 
 const page = () => {
-  return <div className="">Products</div>;
+  return <Products />;
 };
 
 export default page;

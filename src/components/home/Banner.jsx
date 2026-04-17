@@ -17,7 +17,7 @@ const Banner = () => {
       <div className="flex-1">
         <Image
           alt="banner"
-          src={"https://i.ibb.co.com/d442XJ2X/hero.png"}
+          src="https://i.ibb.co.com/d442XJ2X/hero.png"
           width={500}
           height={400}
         ></Image>

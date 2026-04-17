@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/layouts/Navbar";
 import Footer from "@/components/layouts/Footer";
 import localFont from "next/font/local";
+import Container from "@/components/layouts/Container";
 
 const poppins = Poppins({
   weight: ["100", "200", "400", "500", "600", "800"],
@@ -24,9 +25,9 @@ export default function RootLayout({ children }) {
         <header>
           <Navbar />
         </header>
-        <main className="py-2 md:w-11/12 mx-auto min-h-[calc(100vh-302px)]">
+        <Container className="py-2 min-h-[calc(100vh-302px)]">
           {children}
-        </main>
+        </Container>
         <footer>
           <Footer />
         </footer>
