@@ -4,8 +4,8 @@ import { postUser } from "@/actions/auth";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { FcGoogle } from "react-icons/fc";
 import SocialButtons from "./SocialButtons";
+import { signIn } from "next-auth/react";
 
 const RegisterForm = () => {
   const params = useSearchParams();
@@ -37,8 +37,19 @@ const RegisterForm = () => {
     try {
       const result = await postUser(formData);
       if (result.acknowledged) {
-        alert("successful. Please Login");
-        router.push("/login");
+        // router.push("/login");
+        // console.log(result);
+        const result = await signIn("credentials", {
+          email: formData.email,
+          password: formData.password,
+          callbackUrl: callback,
+        });
+        if (!result.ok) {
+          Swal.fire("error", "Email or Password not Match!", "error");
+        } else {
+          Swal.fire("success", "Welcome to Hero Kidz!", "success");
+          //   router.push("/");
+        }
         console.log(result);
       }
       //   console.log(formData);
