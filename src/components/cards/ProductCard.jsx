@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FaStar } from "react-icons/fa";
-import { FiShoppingCart } from "react-icons/fi";
 import { MdOutlineVisibility } from "react-icons/md";
 import CartButton from "../buttons/CartButton";
 

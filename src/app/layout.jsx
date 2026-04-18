@@ -4,6 +4,7 @@ import Navbar from "@/components/layouts/Navbar";
 import Footer from "@/components/layouts/Footer";
 import localFont from "next/font/local";
 import Container from "@/components/layouts/Container";
+import NextAuthProvider from "@/provider/NextAuthProvider";
 
 const poppins = Poppins({
   weight: ["100", "200", "400", "500", "600", "800"],
@@ -67,15 +68,17 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${poppins.className} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">
-        <header>
-          <Navbar />
-        </header>
-        <main className="min-h-[calc(100vh-302px)]">{children}</main>
-        <footer>
-          <Footer />
-        </footer>
-      </body>
+      <NextAuthProvider>
+        <body className="min-h-full flex flex-col">
+          <header>
+            <Navbar />
+          </header>
+          <main className="min-h-[calc(100vh-302px)]">{children}</main>
+          <footer>
+            <Footer />
+          </footer>
+        </body>
+      </NextAuthProvider>
     </html>
   );
 }

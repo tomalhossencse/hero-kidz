@@ -1,0 +1,28 @@
+import { loginUser } from "@/actions/auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
+
+export const authOptions = {
+  // Configure one or more authentication providers
+  providers: [
+    CredentialsProvider({
+      name: "Credentials",
+
+      credentials: {
+        // username: { label: "Username", type: "text", placeholder: "jsmith" },
+        // password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials, req) {
+        const user = await loginUser(credentials);
+        // console.log(credentials);
+
+        return user;
+      },
+    }),
+
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
+  ],
+};

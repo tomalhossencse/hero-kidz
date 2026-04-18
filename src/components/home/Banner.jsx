@@ -5,9 +5,9 @@ import Container from "../layouts/Container";
 
 const Banner = () => {
   return (
-    <Container className="flex justify-between items-center">
-      <div className={`flex-1 space-y-5 py-20  ${banglaFont.className}`}>
-        <h2 className="text-6xl font-bold leading-20">
+    <Container className="flex flex-col-reverse md:flex-row  justify-between items-center px-6">
+      <div className={`flex-1 space-y-5 md:py-20  ${banglaFont.className}`}>
+        <h2 className="md:text-6xl text-5xl font-bold md:leading-20 leading-18">
           আপনার শিশুকে দিন একটি{" "}
           <span className="text-primary">উজ্জ্বল ভবিষ্যৎ</span>
         </h2>
