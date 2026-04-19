@@ -14,11 +14,11 @@ const SocialButtons = () => {
     setLoading(true);
     try {
       const result = await signIn("google", {
-        redirect: false,
+        // redirect: false,
         callbackUrl: params.get("callbackUrl") || "/",
       });
       // console.log(result);
-      if (result.ok) {
+      if (result?.ok) {
         Swal.fire({
           position: "top-end",
           icon: "success",

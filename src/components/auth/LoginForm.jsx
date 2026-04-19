@@ -9,7 +9,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 const LoginForm = () => {
   const params = useSearchParams();
-
   const callback = params.get("callbackUrl") || "/";
 
   const router = useRouter();
@@ -42,15 +41,19 @@ const LoginForm = () => {
       const result = await signIn("credentials", {
         email: formData.email,
         password: formData.password,
-        // redirect: false,
+        redirect: false,
         callbackUrl: params.get("callbackUrl") || "/",
       });
 
       if (!result.ok) {
-        Swal.fire("error", "Email or Password not Match!", "error");
+        Swal.fire(
+          "error",
+          "Email or Password not Match! Try Google Login or Register",
+          "error",
+        );
       } else {
         Swal.fire("success", "Welcome to Hero Kidz!", "success");
-        router.push("/");
+        router.push(callback);
       }
     } catch (err) {
       console.error(err);

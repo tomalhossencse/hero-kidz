@@ -2,8 +2,8 @@ import { loginUser } from "@/actions/auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { dbConnect } from "./dbConnect";
-import { img } from "framer-motion/client";
 
+const userCollection = dbConnect("users");
 export const authOptions = {
   // Configure one or more authentication providers
   providers: [
@@ -29,10 +29,9 @@ export const authOptions = {
   ],
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      const userCollection = dbConnect("users");
       const isExist = await userCollection.findOne({
         email: user?.email,
-        provider: account?.provider,
+        // provider: account?.provider,
       });
       if (isExist) {
         return true;
@@ -59,11 +58,25 @@ export const authOptions = {
     // async redirect({ url, baseUrl }) {
     //   return baseUrl;
     // },
-    // async session({ session, token, user }) {
-    //   return session;
-    // },
-    // async jwt({ token, user, account, profile, isNewUser }) {
-    //   return token;
-    // },
+    async session({ session, token, user }) {
+      if (token) {
+        session.role = token?.role;
+        session.email = token?.email;
+      }
+      return session;
+    },
+    async jwt({ token, user, account, profile, isNewUser }) {
+      if (user) {
+        if (account.provider === "google") {
+          const dbUser = await userCollection.findOne({ email: user.email });
+          token.role = dbUser?.role;
+          token.email = dbUser?.email;
+        } else {
+          token.role = user?.role;
+          token.email = user?.email;
+        }
+      }
+      return token;
+    },
   },
 };

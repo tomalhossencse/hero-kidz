@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import SocialButtons from "./SocialButtons";
 import { signIn } from "next-auth/react";
+import Swal from "sweetalert2";
 
 const RegisterForm = () => {
   const params = useSearchParams();
@@ -36,21 +37,24 @@ const RegisterForm = () => {
 
     try {
       const result = await postUser(formData);
-      if (result.acknowledged) {
+      if (!result?.acknowledged)
+        return Swal.fire("error", "Something Went Wrong", "error");
+
+      if (result?.acknowledged) {
         // router.push("/login");
         // console.log(result);
         const result = await signIn("credentials", {
           email: formData.email,
           password: formData.password,
+          redirect: false,
           callbackUrl: callback,
         });
-        if (!result.ok) {
-          Swal.fire("error", "Email or Password not Match!", "error");
-        } else {
+        if (result.ok) {
           Swal.fire("success", "Welcome to Hero Kidz!", "success");
-          //   router.push("/");
+          router.push(callback);
+        } else {
+          Swal.fire("error", "Email or Password not Match!", "error");
         }
-        console.log(result);
       }
       //   console.log(formData);
 

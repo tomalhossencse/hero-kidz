@@ -9,7 +9,7 @@ const CartButton = ({ product }) => {
   const router = useRouter();
   const path = usePathname();
   const session = useSession();
-  console.log(session);
+  // console.log(session);
   const handle2Cart = () => {
     if (session.status === "authenticated") {
       alert(product._id);
