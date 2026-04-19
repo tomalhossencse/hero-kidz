@@ -21,6 +21,7 @@ const Banner = () => {
           src="https://i.ibb.co.com/d442XJ2X/hero.png"
           width={500}
           height={400}
+          className="w-auto h-auto"
         ></Image>
       </div>
     </Container>

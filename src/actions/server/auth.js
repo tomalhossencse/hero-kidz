@@ -1,8 +1,8 @@
 "use server";
 
-import { dbConnect } from "@/lib/dbConnect";
+import { dbConnect, users } from "@/lib/dbConnect";
 import bcrypt from "bcryptjs";
-const userCollection = dbConnect("users");
+const userCollection = dbConnect(users);
 
 export const postUser = async (payload) => {
   const { password, email, name } = payload;

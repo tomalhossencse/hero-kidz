@@ -1,6 +1,6 @@
 "use client";
 
-import { postUser } from "@/actions/auth";
+import { postUser } from "@/actions/server/auth";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";

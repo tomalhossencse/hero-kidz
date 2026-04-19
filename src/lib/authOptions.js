@@ -1,4 +1,4 @@
-import { loginUser } from "@/actions/auth";
+import { loginUser } from "@/actions/server/auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { dbConnect } from "./dbConnect";
