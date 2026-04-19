@@ -20,9 +20,23 @@ const CartButton = ({ product }) => {
       if (session.status === "authenticated") {
         const result = await handleCart({ product, inc: true });
         if (result.success) {
-          Swal.fire("Add to Cart", product?.title, "success");
+          Swal.fire({
+            title: "Add to Cart",
+            text: product?.title,
+            icon: "success",
+            position: "top-right",
+            showConfirmButton: false,
+            timer: 1000,
+          });
         } else {
-          Swal.fire("Opps!", "Something Went Wrong", "error");
+          Swal.fire({
+            title: "Opps!",
+            text: "Something Went Wrong",
+            icon: "error",
+            position: "top-right",
+            showConfirmButton: false,
+            timer: 1000,
+          });
         }
       } else {
         router.push(`/login?callbackUrl=${path}`);
