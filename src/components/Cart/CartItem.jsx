@@ -1,19 +1,38 @@
 "use client";
 
-import { deleteItemsCart } from "@/actions/server/cart";
+import {
+  decreaseItemCart,
+  deleteItemsCart,
+  increaseItemCart,
+} from "@/actions/server/cart";
+import { p } from "framer-motion/client";
 import Image from "next/image";
+import { useState } from "react";
 import { FaPlus, FaMinus, FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 
-const CartItem = ({ item }) => {
+const CartItem = ({ item, removeItem, updateQuantity }) => {
   const { _id, title, image, price, quantity } = item;
+  const [loading, setLoading] = useState(false);
 
-  const handleIncrease = (id) => {
-    console.log("increase", id);
+  const handleIncrease = async () => {
+    setLoading(true);
+    const result = await increaseItemCart(_id);
+    console.log(result);
+    if (result.success) {
+      updateQuantity(_id, quantity + 1);
+    }
+    setLoading(false);
   };
 
-  const handleDecrease = (id) => {
-    console.log("decrease", id);
+  const handleDecrease = async () => {
+    setLoading(true);
+    const result = await decreaseItemCart(_id);
+    console.log(result);
+    if (result.success) {
+      updateQuantity(_id, quantity - 1);
+    }
+    setLoading(false);
   };
 
   const handleRemove = async () => {
@@ -30,6 +49,7 @@ const CartItem = ({ item }) => {
         if (result.isConfirmed) {
           const result = await deleteItemsCart(_id);
           if (result.success) {
+            removeItem(_id);
             Swal.fire({
               title: "Deleted!",
               text: "Your file has been deleted.",
@@ -79,18 +99,19 @@ const CartItem = ({ item }) => {
       <div className="flex items-center gap-2 bg-base-200 px-3 py-1 rounded-full">
         <button
           onClick={() => handleDecrease(_id)}
-          disabled={quantity <= 1}
+          disabled={quantity <= 1 || loading}
           className="btn btn-xs btn-circle btn-ghost hover:bg-base-300 disabled:opacity-40"
         >
           <FaMinus size={10} />
         </button>
 
         <span className="w-6 text-center font-semibold text-sm">
-          {quantity}
+          {item.quantity}
         </span>
 
         <button
-          onClick={() => handleIncrease(_id)}
+          disabled={loading}
+          onClick={handleIncrease}
           className="btn btn-xs btn-circle btn-ghost hover:bg-base-300"
         >
           <FaPlus size={10} />

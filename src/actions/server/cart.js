@@ -69,12 +69,17 @@ export const getCart = cache(async () => {
       .find(query)
       .sort({ createdAt: -1 })
       .toArray();
-    return result;
+    const planData = result.map((item) => ({
+      ...item,
+      _id: item._id.toString(),
+    }));
+    return planData;
   } catch (error) {
-    console.log(error);
-    return error;
+    console.error("getCart error:", error);
+    return [];
   }
 });
+
 export const deleteItemsCart = async (id) => {
   try {
     const { user } = (await getServerSession(authOptions)) || {};
@@ -91,12 +96,58 @@ export const deleteItemsCart = async (id) => {
 
     const query = { _id: new ObjectId(id) };
     const result = await cartCollection.deleteOne(query);
-    if (Boolean(result.deletedCount)) {
-      revalidatePath("/cart");
-    }
+    // if (Boolean(result.deletedCount)) {
+    //   revalidatePath("/cart");
+    // }
     return { success: Boolean(result.deletedCount) };
   } catch (error) {
     console.log(error);
+    return error;
+  }
+};
+
+export const increaseItemCart = async (id) => {
+  try {
+    const { user } = (await getServerSession(authOptions)) || {};
+    if (!user)
+      return {
+        success: false,
+      };
+    const query = { _id: new ObjectId(id) };
+    const updateData = {
+      $inc: {
+        quantity: 1,
+      },
+    };
+
+    const result = await cartCollection.updateOne(query, updateData);
+    return {
+      success: Boolean(result.modifiedCount),
+    };
+  } catch (error) {
+    return error;
+  }
+};
+
+export const decreaseItemCart = async (id) => {
+  try {
+    const { user } = (await getServerSession(authOptions)) || {};
+    if (!user)
+      return {
+        success: false,
+      };
+    const query = { _id: new ObjectId(id) };
+    const updateData = {
+      $inc: {
+        quantity: -1,
+      },
+    };
+
+    const result = await cartCollection.updateOne(query, updateData);
+    return {
+      success: Boolean(result.modifiedCount),
+    };
+  } catch (error) {
     return error;
   }
 };

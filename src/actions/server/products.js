@@ -5,8 +5,17 @@ import { ObjectId } from "mongodb";
 const productCollection = dbConnect(products);
 
 export const getProducts = async () => {
-  const products = await productCollection.find().toArray();
-  return JSON.parse(JSON.stringify(products));
+  try {
+    const products = await productCollection.find().toArray();
+    const plainProducts = products.map((product) => ({
+      ...product,
+      _id: product._id.toString(),
+    }));
+    return plainProducts;
+  } catch (error) {
+    console.log("Products erro : ", error);
+    return [];
+  }
 };
 
 export const getSingleProducts = async (id) => {
