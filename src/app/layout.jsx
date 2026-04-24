@@ -3,7 +3,6 @@ import "./globals.css";
 import Navbar from "@/components/layouts/Navbar";
 import Footer from "@/components/layouts/Footer";
 import localFont from "next/font/local";
-import Container from "@/components/layouts/Container";
 import NextAuthProvider from "@/provider/NextAuthProvider";
 
 const poppins = Poppins({
