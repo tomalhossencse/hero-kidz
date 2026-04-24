@@ -37,6 +37,7 @@ const CartItem = ({ item, removeItem, updateQuantity }) => {
 
   const handleRemove = async () => {
     try {
+      setLoading(true);
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -71,6 +72,8 @@ const CartItem = ({ item, removeItem, updateQuantity }) => {
       });
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 

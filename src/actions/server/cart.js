@@ -151,3 +151,20 @@ export const decreaseItemCart = async (id) => {
     return error;
   }
 };
+
+export const clearCart = async () => {
+  try {
+    const { user } = (await getServerSession(authOptions)) || {};
+    if (!user)
+      return {
+        success: false,
+      };
+
+    const query = { email: user?.email };
+
+    const result = await cartCollection.deleteMany(query);
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
