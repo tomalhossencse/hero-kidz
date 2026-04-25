@@ -1,15 +1,14 @@
 "use server";
 
 import { authOptions } from "@/lib/authOptions";
-import { carts, dbConnect } from "@/lib/dbConnect";
+import { carts, dbConnect, products } from "@/lib/dbConnect";
 import { ObjectId } from "mongodb";
 import { getServerSession } from "next-auth";
-import { revalidatePath } from "next/cache";
 import { cache } from "react";
 
 const cartCollection = dbConnect(carts);
 
-export const handleCart = async ({ product, inc = true }) => {
+export const handleCart = async (productId) => {
   try {
     const { user } = (await getServerSession(authOptions)) || {};
     if (!user)
@@ -18,14 +17,14 @@ export const handleCart = async ({ product, inc = true }) => {
       };
 
     // getCartItem - user.email && productId
-    const query = { email: user?.email, productId: product?._id };
+    const query = { email: user?.email, productId: new ObjectId(productId) };
     const isExist = await cartCollection.findOne(query);
 
     if (isExist) {
       // if exist - update
       const updateData = {
         $inc: {
-          quantity: inc ? 1 : -1,
+          quantity: 1,
         },
       };
 
@@ -34,6 +33,9 @@ export const handleCart = async ({ product, inc = true }) => {
         success: Boolean(result.modifiedCount),
       };
     } else {
+      const product = await dbConnect(products).findOne({
+        _id: new ObjectId(productId),
+      });
       // Not exist - insert
       const discountedPrice =
         product.price - (product.price * product.discount) / 100;
@@ -71,6 +73,7 @@ export const getCart = cache(async () => {
       .toArray();
     const planData = result.map((item) => ({
       ...item,
+      productId: item.productId.toString(),
       _id: item._id.toString(),
     }));
     return planData;
@@ -94,7 +97,7 @@ export const deleteItemsCart = async (id) => {
       };
     }
 
-    const query = { _id: new ObjectId(id) };
+    const query = { _id: new ObjectId(id), email: user?.email };
     const result = await cartCollection.deleteOne(query);
     // if (Boolean(result.deletedCount)) {
     //   revalidatePath("/cart");
@@ -113,7 +116,7 @@ export const increaseItemCart = async (id) => {
       return {
         success: false,
       };
-    const query = { _id: new ObjectId(id) };
+    const query = { _id: new ObjectId(id), email: user?.email };
     const updateData = {
       $inc: {
         quantity: 1,
@@ -136,7 +139,7 @@ export const decreaseItemCart = async (id) => {
       return {
         success: false,
       };
-    const query = { _id: new ObjectId(id) };
+    const query = { _id: new ObjectId(id), email: user?.email };
     const updateData = {
       $inc: {
         quantity: -1,

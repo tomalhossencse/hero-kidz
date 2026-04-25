@@ -9,16 +9,16 @@ import Swal from "sweetalert2";
 
 const CartButton = ({ product }) => {
   const [loading, setLoading] = useState(false);
-  //   console.log(product);
+  console.log(product);
   const router = useRouter();
   const path = usePathname();
   const session = useSession();
   // console.log(session);
   const handle2Cart = async () => {
-    setLoading(true);
     try {
+      setLoading(true);
       if (session.status === "authenticated") {
-        const result = await handleCart({ product, inc: true });
+        const result = await handleCart(product._id);
         if (result.success) {
           Swal.fire({
             title: "Add to Cart",
