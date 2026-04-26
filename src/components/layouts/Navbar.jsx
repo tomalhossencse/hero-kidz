@@ -19,6 +19,9 @@ const Navbar = () => {
         <NavLink href={"/blog"}>Blog</NavLink>
       </li>
       <li>
+        <NavLink href={"/my-orders"}>My Orders</NavLink>
+      </li>
+      <li>
         <NavLink href={"/contacts"}>Contacts</NavLink>
       </li>
     </>

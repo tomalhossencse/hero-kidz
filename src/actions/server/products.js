@@ -13,7 +13,7 @@ export const getProducts = async () => {
     }));
     return plainProducts;
   } catch (error) {
-    console.log("Products erro : ", error);
+    console.log("Products error : ", error);
     return [];
   }
 };

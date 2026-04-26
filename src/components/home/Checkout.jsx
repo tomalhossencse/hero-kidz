@@ -40,7 +40,7 @@ const Checkout = ({ cartItems = [] }) => {
 
       console.log(result);
       if (result.insertedId) {
-        router.push("/");
+        router.push("/my-orders");
         Swal.fire({
           title: "Success",
           text: "Order Added",

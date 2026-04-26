@@ -3,7 +3,6 @@ import CartButton from "@/components/buttons/CartButton";
 import Container from "@/components/layouts/Container";
 import Image from "next/image";
 import { FaStar } from "react-icons/fa";
-import { FiShoppingCart } from "react-icons/fi";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;

@@ -84,3 +84,38 @@ export const createOrder = async (payload) => {
     console.log(error);
   }
 };
+
+export const getAllOrders = async () => {
+  try {
+    const { user } = (await getServerSession(authOptions)) || {};
+    if (!user) return [];
+
+    const query = { email: user?.email };
+    const orders = await orderCollection.find(query).toArray();
+    const plainOrders = orders.map((order) => ({
+      ...order,
+      _id: order._id.toString(),
+    }));
+    return plainOrders;
+  } catch (error) {
+    console("order error : ", error);
+    return [];
+  }
+};
+export const getSingleOrders = async (id) => {
+  try {
+    const { user } = (await getServerSession(authOptions)) || {};
+    if (!user) return {};
+
+    if (id.length != 24) {
+      return {};
+    }
+    const query = { _id: new ObjectId(id), email: user?.email };
+    const order = await orderCollection.findOne(query);
+
+    return { ...order, _id: order._id.toString() };
+  } catch (error) {
+    console.log("order error : ", error);
+    return {};
+  }
+};
