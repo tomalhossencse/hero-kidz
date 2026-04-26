@@ -57,7 +57,7 @@ export const createOrder = async (payload) => {
           },
         },
       }));
-      console.log(bulkOps);
+      // console.log(bulkOps);
       await productCollection.bulkWrite(bulkOps); //how to updateMany here
       // clear cart
       await clearCart();

@@ -3,6 +3,7 @@ import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
+import Swal from "sweetalert2";
 
 const SocialButtons = () => {
   const [loading, setLoading] = useState(false);
@@ -18,23 +19,23 @@ const SocialButtons = () => {
         callbackUrl: params.get("callbackUrl") || "/",
       });
       // console.log(result);
-      if (result?.ok) {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Login with Google Succesfully",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      } else {
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: "sorry Login Failed. Try Again",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
+      // if (result?.ok) {
+      //   Swal.fire({
+      //     position: "top-end",
+      //     icon: "success",
+      //     title: "Login with Google Succesfully",
+      //     showConfirmButton: false,
+      //     timer: 1500,
+      //   });
+      // } else {
+      //   Swal.fire({
+      //     position: "top-end",
+      //     icon: "error",
+      //     title: "sorry Login Failed. Try Again",
+      //     showConfirmButton: false,
+      //     timer: 1500,
+      //   });
+      // }
     } catch (err) {
       console.error(err);
     } finally {
